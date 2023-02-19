@@ -13,9 +13,13 @@ router.get('/', async (req: Request, res: Response) => {
 
 
 router.get('/:id', async (req: Request, res: Response) => {
-    const user = await User.findById(req.params.id);
-    res.json(user);
-});
+    try {
+        const user = await User.findById(req.params.id)
+        res.json(user)
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+})
 
 router.post('/', async (req: Request, res: Response) => {
     const newUser = new User(req.body);

@@ -9,6 +9,6 @@ connectToDatabase();
 
 app.use(bodyParser.json());
 
-app.use('/', userRoutes);
+app.use('/api/v1/user', userRoutes);
 let port = 4576;
 app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -6,7 +6,14 @@
         "outDir": "./dist",
         "strict": true,
         "moduleResolution": "node",
-        "sourceMap": true
+        "sourceMap": true,
+        "noUnusedLocals": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "preserveConstEnums": true,
+        "forceConsistentCasingInFileNames": true,
+        "useUnknownInCatchVariables": false
     },
     "include": [
         "./src/**/*"
