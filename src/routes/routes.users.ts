@@ -1,12 +1,16 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import User from '../models/User';
 
 const router: Router = Router();
+
+
 
 router.get('/', async (req: Request, res: Response) => {
     const users = await User.find();
     res.json(users);
 });
+
+
 
 router.get('/:id', async (req: Request, res: Response) => {
     const user = await User.findById(req.params.id);
@@ -28,5 +32,13 @@ router.delete('/:id', async (req: Request, res: Response) => {
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: 'User deleted' });
 });
+
+router.use((req: Request, res: Response, next: NextFunction) => {
+    const error = new Error('Not Found');
+    res.status(404).json({
+        message: error.message,
+    });
+});
+
 
 export default router;
