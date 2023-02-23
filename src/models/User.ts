@@ -4,10 +4,12 @@ interface IUser extends Document {
     name: string;
     email: string;
     password: string;
+    verified: boolean;
     role: string;
 };
 
 const userSchema: Schema = new Schema({
+    id: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -15,4 +17,5 @@ const userSchema: Schema = new Schema({
 
 const User: Model<IUser> = model<IUser>('User', userSchema, 'users');
 
-export default User;
+export { User };
+export default IUser;
