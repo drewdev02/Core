@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import { User } from '../models/User';
 
@@ -5,7 +6,7 @@ const router: Router = Router();
 
 
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/',async (req: Request, res: Response) => {
     const users = await User.find();
     res.json(users);
 });
@@ -22,7 +23,14 @@ router.get('/:id', async (req: Request, res: Response) => {
 })
 
 router.post('/', async (req: Request, res: Response) => {
-    const newUser = new User(req.body);
+    const { name, email, password } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser = new User({
+        name,
+        email,
+        password: hashedPassword
+    });
     await newUser.save();
     res.json(newUser);
 });

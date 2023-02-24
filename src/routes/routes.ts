@@ -1,12 +1,13 @@
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { User } from '../models/User';
+import ErrorResponse from '../utils/errorResponse';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const JWT_SECRET: string = process.env.JWT_SECRET ?? '';
+const JWT_SECRET = process.env.JWT_SECRET ?? '';
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION;
 
 const router: Router = Router();
@@ -17,13 +18,13 @@ router.post('/login', async (req: Request, res: Response) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        return res.status(400).json({ message: 'Email or password is incorrect' });
+        return new ErrorResponse(400, 'Email or password is incorrect').send(res);        
     }
 
-    const isPasswordMatch: boolean = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
-        return res.status(400).json({ message: 'Email or password is incorrect' });
+        return new ErrorResponse(400, 'Email or password is incorrect').send(res);
     }
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
