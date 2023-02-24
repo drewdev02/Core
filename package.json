@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": " user crud api",
+  "description": "Proyecto base para crear aplicaciones con Node.js, Express y MongoDB.",
   "main": "app.ts",
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
