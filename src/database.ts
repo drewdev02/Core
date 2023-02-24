@@ -3,9 +3,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const DB_URI: string = process.env.DB_URL ?? ''; // The nullish coalescing operator (??) is used to assign an empty string in case the variable does not exist.
-
-console.log(DB_URI);
+const USERNAME = process.env.USERNAME ?? '';
+const PASSWORD = process.env.PASSWORD ?? '';
 
 mongoose.set('strictQuery', false)
 
@@ -13,7 +12,7 @@ export const connectToDatabase = async () => {
     let dbConnected = false;
     const intervalId = setInterval(async () => {
         try {
-            await mongoose.connect(DB_URI);
+            await mongoose.connect(`mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.abhqnha.mongodb.net/test`);
             dbConnected = true;
             clearInterval(intervalId);
             console.log('MongoDB connected!');
