@@ -3,16 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const USERNAME = process.env.USERNAME ?? '';
-const PASSWORD = process.env.PASSWORD ?? '';
-
 mongoose.set('strictQuery', false)
 
 export const connectToDatabase = async () => {
-    let dbConnected = false;
+    let dbConnected: boolean = false;
     const intervalId = setInterval(async () => {
         try {
-            await mongoose.connect(`mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.abhqnha.mongodb.net/test`);
+            await mongoose.connect(`mongodb+srv://adrewdev:fDd0UOD91CE1MPYr@cluster0.abhqnha.mongodb.net/test`);
             dbConnected = true;
             clearInterval(intervalId);
             console.log('MongoDB connected!');
